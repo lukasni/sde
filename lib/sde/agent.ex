@@ -1,7 +1,9 @@
 defmodule SDE.Agent do
   @agent_info SDE.BSD.load!("agtAgents.yaml") |> SDE.BSD.to_map("agentID")
-  @agent_types SDE.BSD.load!("agtAgentTypes.yaml") |> SDE.BSD.map_value("agentTypeID", "agentType")
-  @research_agents SDE.BSD.load!("agtResearchAgents.yaml") |> SDE.BSD.map_value("agentID", "typeID")
+  @agent_types SDE.BSD.load!("agtAgentTypes.yaml")
+               |> SDE.BSD.map_value("agentTypeID", "agentType")
+  @research_agents SDE.BSD.load!("agtResearchAgents.yaml")
+                   |> SDE.BSD.map_value("agentID", "typeID")
   @agents_in_space SDE.FSD.load!("agentsInSpace.yaml")
 
   def info(agent_id), do: Map.get(@agent_info, agent_id)
