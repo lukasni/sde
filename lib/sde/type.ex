@@ -1,9 +1,8 @@
 defmodule SDE.Type do
-  @path "priv/sde/fsd/typeIDs.yaml"
+  @types SDE.FSD.load!("typeIDs.yaml")
 
-  @types YamlElixir.read_from_file!(@path)
+  def list_ids(), do: Map.keys(@types)
+  def all(), do: @types
 
-  def list(), do: Map.keys(@types)
-  
   def info(type_id), do: Map.get(@types, type_id)
 end

@@ -1,17 +1,9 @@
 defmodule SDE.Character do
-  @bsd "priv/sde/bsd/"
-
-  @chrAncestries YamlElixir.read_from_file!(@bsd <> "chrAncestries.yaml")
-  @chrAttributes YamlElixir.read_from_file!(@bsd <> "chrAttributes.yaml")
-  @chrBloodlines YamlElixir.read_from_file!(@bsd <> "chrBloodlines.yaml")
-  @chrFactions YamlElixir.read_from_file!(@bsd <> "chrFactions.yaml")
-  @chrRaces YamlElixir.read_from_file!(@bsd <> "chrRaces.yaml")
-
-  @ancestries @chrAncestries |> Enum.map(fn %{"ancestryID" => id} = data -> {id, data} end) |> Map.new()
-  @attributes @chrAttributes |> Enum.map(fn %{"attributeID" => id} = data -> {id, data} end) |> Map.new()
-  @bloodlines @chrBloodlines |> Enum.map(fn %{"bloodlineID" => id} = data -> {id, data} end) |> Map.new()
-  @factions @chrFactions |> Enum.map(fn %{"factionID" => id} = data -> {id, data} end) |> Map.new()
-  @races @chrRaces |> Enum.map(fn %{"raceID" => id} = data -> {id, data} end) |> Map.new()
+  @ancestries SDE.BSD.load!("chrAncestries.yaml") |> SDE.BSD.to_map("ancestryID")
+  @attributes SDE.BSD.load!("chrAttributes.yaml") |> SDE.BSD.to_map("attributeID")
+  @bloodlines SDE.BSD.load!("chrBloodlines.yaml") |> SDE.BSD.to_map("bloodlineID")
+  @factions SDE.BSD.load!("chrFactions.yaml") |> SDE.BSD.to_map("factionID")
+  @races SDE.BSD.load!("chrRaces.yaml") |> SDE.BSD.to_map("raceID")
 
   def list_ancestries(), do: @ancestries |> Map.keys()
   def list_attributes(), do: @attributes |> Map.keys()

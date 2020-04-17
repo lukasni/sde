@@ -1,17 +1,8 @@
 defmodule SDE.Dogma do
-  @bsd "priv/sde/bsd/"
-
-  @dgmAttributeCategories YamlElixir.read_from_file!(@bsd <> "dgmAttributeCategories.yaml")
-  @dgmAttributeTypes YamlElixir.read_from_file!(@bsd <> "dgmAttributeTypes.yaml")
-  @dgmEffects YamlElixir.read_from_file!(@bsd <> "dgmEffects.yaml")
-  @dgmTypeAttributes YamlElixir.read_from_file!(@bsd <> "dgmTypeAttributes.yaml")
-  @dgmTypeEffects YamlElixir.read_from_file!(@bsd <> "dgmTypeEffects.yaml")
-
-  @attribute_categories @dgmAttributeCategories |> Enum.map(fn %{"categoryID" => id} = data -> {id, data} end) |> Map.new()
-  @attributes @dgmAttributeTypes |> Enum.map(fn %{"attributeID" => id} = data -> {id, data} end) |> Map.new()
-  @effects @dgmEffects |> Enum.map(fn %{"effectID" => id} = data -> {id, data} end) |> Map.new()
-  @type_attributes @dgmTypeAttributes |> Enum.group_by(&Map.get(&1, "typeID"))
-  @type_effects @dgmTypeEffects |> Enum.group_by(&Map.get(&1, "typeID"))
+  @attribute_categories SDE.FSD.load!("dogmaAttributeCategories.yaml")
+  @attributes SDE.FSD.load!("dogmaAttributes.yaml")
+  @effects SDE.FSD.load!("dogmaEffects.yaml")
+  @type_dogma SDE.FSD.load!("typeDogma.yaml")
 
   def list_attribute_categories(), do: Map.keys(@attribute_categories)
   def list_attributes(), do: Map.keys(@attributes)
@@ -21,6 +12,7 @@ defmodule SDE.Dogma do
   def attributes(id), do: Map.get(@attributes, id)
   def effects(id), do: Map.get(@effects, id)
 
-  def type_attributes(type_id), do: Map.get(@type_attributes, type_id)
-  def type_effects(type_id), do: Map.get(@type_effects, type_id)
+  def type_attributes(type_id), do: get_in(@type_dogma, [type_id, "dogmaAttributes"])
+  def type_effects(type_id), do: get_in(@type_dogma, [type_id, "dogmaEffects"])
+  def type_dogma(type_id), do: Map.get(@type_dogma, type_id)
 end
