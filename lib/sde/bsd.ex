@@ -12,7 +12,13 @@ defmodule SDE.BSD do
         _ -> fn x -> x end
       end
 
-    Enum.group_by(data, fn elem -> elem[index] end, value_fun)
+    if Keyword.get(opts, :single_result, true) do
+      data
+      |> Enum.map(&{&1[index], value_fun.(&1)})
+      |> Map.new()
+    else
+      Enum.group_by(data, fn elem -> elem[index] end, value_fun)
+    end
   end
 
   def map_value(data, key_index, value_index) do

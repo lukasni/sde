@@ -6,6 +6,8 @@ defmodule SDE.Agent do
                    |> SDE.BSD.map_value("agentID", "typeID")
   @agents_in_space SDE.FSD.load!("agentsInSpace.yaml")
 
+  def list_ids(), do: Map.keys(@agent_info)
+  def all(), do: @agent_info
   def info(agent_id), do: Map.get(@agent_info, agent_id)
   def type(type_id), do: Map.get(@agent_types, type_id)
   def research(agent_id), do: Map.get(@research_agents, agent_id)

@@ -7,7 +7,7 @@ defmodule SDE.NPCCorporation do
 
   defmodule Division do
     @corp_divisions SDE.BSD.load!("crpNPCCorporationDivisions.yaml")
-                    |> SDE.BSD.to_map("corporationID")
+                    |> SDE.BSD.to_map("corporationID", single_result: false)
 
     def list(corporation_id), do: Map.get(@corp_divisions, corporation_id)
   end
