@@ -15,4 +15,9 @@ defmodule SDE do
   def hello do
     :world
   end
+
+  def populate() do
+    SDE.Config.yaml_files()
+    |> Enum.map(&SDE.Loader.load/1)
+  end
 end

@@ -27,3 +27,6 @@ sde-*.tar
 
 # Ignore SDE source files
 /priv/sde/
+
+# Ignore SDE ETF dumps
+/priv/dumps/
