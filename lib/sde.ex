@@ -20,4 +20,9 @@ defmodule SDE do
     SDE.Config.yaml_files()
     |> Enum.map(&SDE.Loader.load/1)
   end
+
+  def precompile() do
+    SDE.Config.yaml_files()
+    |> SDE.Converter.yaml_to_etf()
+  end
 end
