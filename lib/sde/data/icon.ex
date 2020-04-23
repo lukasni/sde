@@ -1,7 +1,5 @@
 defmodule SDE.Icon do
-  @icons SDE.FSD.load!("iconIDs.yaml")
-
-  def list_ids(), do: Map.keys(@icons)
-  def all(), do: @icons
-  def info(icon_id), do: Map.get(@icons, icon_id)
+  def list_ids(), do: Map.keys(SDE.Data.get(:icons))
+  def all(), do: SDE.Data.get(:icons)
+  def info(icon_id), do: Map.get(SDE.Data.get(:icons), icon_id)
 end

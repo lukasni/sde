@@ -1,26 +1,29 @@
 defmodule SDE.PlanetSchematic do
-  @schematics SDE.BSD.load!("planetSchematics.yaml")
-              |> SDE.BSD.to_map("schematicID")
-
-  def list_ids(), do: Map.keys(@schematics)
-  def all(), do: @schematics
-  def info(schematic_id), do: Map.get(@schematics, schematic_id)
+  def list_ids(), do: Map.keys(SDE.Data.get(:planet_schematics))
+  def all(), do: SDE.Data.get(:planet_schematics)
+  def info(schematic_id), do: Map.get(SDE.Data.get(:planet_schematics), schematic_id)
 
   defmodule Pin do
-    @planetSchematicsPinMap SDE.BSD.load!("planetSchematicsPinMap.yaml")
+    def schematics_for_pin(pin_id) do
+      SDE.Data.get(:planet_schematics_for_pin)
+      |> Map.get(pin_id)
+    end
 
-    @pin_to_schematic Enum.group_by(
-                        @planetSchematicsPinMap,
-                        & &1["pinTypeID"],
-                        & &1["schematicID"]
-                      )
-    @schematic_to_pin Enum.group_by(
-                        @planetSchematicsPinMap,
-                        & &1["schematicID"],
-                        & &1["pinTypeID"]
-                      )
+    def pins_for_schematic(schematic_id) do
+      SDE.Data.get(:planet_pins_for_schematic)
+      |> Map.get(schematic_id)
+    end
+  end
 
-    def schematics_for_pin(pin_id), do: Map.get(@pin_to_schematic, pin_id)
-    def pins_for_schematic(schematic_id), do: Map.get(@schematic_to_pin, schematic_id)
+  defmodule Type do
+    def schematics_for_type(type_id) do
+      SDE.Data.get(:planet_schematics_for_type)
+      |> Map.get(type_id)
+    end
+
+    def types_for_schematic(schematic_id) do
+      SDE.Data.get(:planet_types_for_schematic)
+      |> Map.get(schematic_id)
+    end
   end
 end

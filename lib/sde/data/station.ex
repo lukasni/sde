@@ -1,7 +1,5 @@
 defmodule SDE.Station do
-  @stations SDE.BSD.load!("staStations.yaml") |> SDE.BSD.to_map("stationID")
-
-  def list_ids(), do: Map.keys(@stations)
-  def all(), do: @stations
-  def info(station_id), do: Map.get(@stations, station_id)
+  def list_ids(), do: Map.keys(SDE.Data.get(:stations))
+  def all(), do: SDE.Data.get(:stations)
+  def info(station_id), do: Map.get(SDE.Data.get(:stations), station_id)
 end

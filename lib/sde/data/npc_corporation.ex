@@ -1,28 +1,26 @@
 defmodule SDE.NPCCorporation do
-  @npc_corporations SDE.BSD.load!("crpNPCCorporations.yaml") |> SDE.BSD.to_map("corporationID")
-
-  def list_ids(), do: Map.keys(@npc_corporations)
-  def all(), do: @npc_corporations
-  def info(id), do: Map.get(@npc_corporations, id)
+  def list_ids(), do: Map.keys(SDE.Data.get(:corporations))
+  def all(), do: SDE.Data.get(:corporations)
+  def info(id), do: Map.get(SDE.Data.get(:corporations), id)
 
   defmodule Division do
-    @corp_divisions SDE.BSD.load!("crpNPCCorporationDivisions.yaml")
-                    |> SDE.BSD.to_map("corporationID", single_result: false)
-
-    def list(corporation_id), do: Map.get(@corp_divisions, corporation_id)
+    def list(corporation_id) do
+      SDE.Data.get(:corporation_divisions)
+      |> Map.get(corporation_id)
+    end
   end
 
   defmodule ResearchField do
-    @corp_research_fields SDE.BSD.load!("crpNPCCorporationResearchFields.yaml")
-                          |> Enum.group_by(& &1["corporationID"], & &1["skillID"])
-
-    def list(corporation_id), do: Map.get(@corp_research_fields, corporation_id)
+    def list(corporation_id) do
+      SDE.Data.get(:corporation_research_fields)
+      |> Map.get(corporation_id)
+    end
   end
 
   defmodule Trades do
-    @corp_trades SDE.BSD.load!("crpNPCCorporationTrades.yaml")
-                 |> Enum.group_by(& &1["corporationID"], & &1["typeID"])
-
-    def list(corporation_id), do: Map.get(@corp_trades, corporation_id)
+    def list(corporation_id) do
+      SDE.Data.get(:corporation_trades)
+      |> Map.get(corporation_id)
+    end
   end
 end

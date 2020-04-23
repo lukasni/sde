@@ -1,7 +1,5 @@
 defmodule SDE.TournamentRuleSets do
-  @rulesets SDE.FSD.load!("tournamentRuleSets.yaml") |> SDE.BSD.to_map("ruleSetID")
-
-  def list_ids(), do: Map.keys(@rulesets)
-  def all(), do: @rulesets
-  def info(id), do: Map.get(@rulesets, id)
+  def list_ids(), do: Map.keys(SDE.Data.get(:tournament_rule_sets))
+  def all(), do: SDE.Data.get(:tournament_rule_sets)
+  def info(id), do: Map.get(SDE.Data.get(:tournament_rule_sets), id)
 end

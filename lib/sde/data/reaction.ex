@@ -1,8 +1,5 @@
 defmodule SDE.Reaction do
-  @reactions SDE.BSD.load!("invTypeReactions.yaml")
-             |> SDE.BSD.to_map("reactionTypeID", delete_index: true)
-
-  def list_ids(), do: Map.keys(@reactions)
-  def all(), do: @reactions
-  def info(reaction_id), do: Map.get(@reactions, reaction_id)
+  def list_ids(), do: Map.keys(SDE.Data.get(:reactions))
+  def all(), do: SDE.Data.get(:reactions)
+  def info(reaction_id), do: Map.get(SDE.Data.get(:reactions), reaction_id)
 end

@@ -1,9 +1,17 @@
 defmodule SDE.Skin do
-  @skin_licenses SDE.FSD.load!("skinLicenses.yaml")
-  @skin_materials SDE.FSD.load!("skinMaterials.yaml")
-  @skins SDE.FSD.load!("skins.yaml")
+  def list_ids(), do: Map.keys(SDE.Data.get(:skins))
+  def all(), do: SDE.Data.get(:skins)
+  def info(skin_id), do: Map.get(SDE.Data.get(:skins), skin_id)
 
-  def skin(skin_id), do: Map.get(@skins, skin_id)
-  def material(material_id), do: Map.get(@skin_materials, material_id)
-  def licenses(type_id), do: Map.get(@skin_licenses, type_id)
+  defmodule Material do
+    def list_ids(), do: Map.keys(SDE.Data.get(:skin_materials))
+    def all(), do: SDE.Data.get(:skin_materials)
+    def info(material_id), do: Map.get(SDE.Data.get(:skin_materials), material_id)
+  end
+
+  defmodule License do
+    def list_ids(), do: Map.keys(SDE.Data.get(:skin_licenses))
+    def all(), do: SDE.Data.get(:skin_licenses)
+    def info(license_id), do: Map.get(SDE.Data.get(:skin_licenses), license_id)
+  end
 end
