@@ -249,6 +249,9 @@ defmodule SDE.Config do
       },
       type_materials: %YamlFile{
         path: Path.join(fsd(), "typeMaterials.yaml")
+      },
+      landmarks: %YamlFile{
+        path: Path.join([fsd(), "landmarks", "landmarks.staticdata"])
       }
     ]
   end
