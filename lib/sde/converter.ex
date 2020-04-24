@@ -37,6 +37,8 @@ defmodule SDE.Converter do
     content = :erlang.term_to_binary(data)
     path = SDE.Config.dump_path(dump)
 
+    File.mkdir_p!(SDE.Config.dumps())
+
     File.write!(path, content)
   end
 end
