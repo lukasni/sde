@@ -19,14 +19,16 @@ defmodule SDE do
     SDE.Converter.UniverseConverter.yaml_to_etf()
   end
 
-  def maybe_update() do
+  def maybe_update(skip_populate \\ false) do
     IO.puts("Checking for SDE update...")
     case SDE.Downloader.update() do
       {:updated, hash} ->
         IO.puts("Updated SDE. Precompiling...")
         precompile()
-        IO.puts("Compiled YAML files. Populating...")
-        populate()
+        unless skip_populate do
+          IO.puts("Compiled YAML files. Populating...")
+          populate()
+        end
         IO.puts("SDE updated")
         {:updated, hash}
 
