@@ -6,6 +6,7 @@ defmodule SDE.Converter do
   end
 
   def task({name, config}) do
+    IO.puts("Compiling #{name}")
     config
     |> load_file()
     |> transform_data(config)
@@ -32,6 +33,7 @@ defmodule SDE.Converter do
   end
 
   def dump_file(data, dump) do
+    IO.puts("Storing #{dump} dump...")
     content = :erlang.term_to_binary(data)
     path = SDE.Config.dump_path(dump)
 

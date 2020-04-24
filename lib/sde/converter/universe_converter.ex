@@ -1,18 +1,24 @@
 defmodule SDE.Converter.UniverseConverter do
 
   def yaml_to_etf() do
+    IO.puts("Finding regions...")
     region_files = load_region_files()
+    IO.puts("Finding constellatiions...")
     constellation_files = load_constellation_files(region_files)
+    IO.puts("Finding systems")
     system_files = load_system_files(constellation_files)
 
+    IO.puts("Compiling regions...")
     region_files
       |> transform_data("regionID")
       |> SDE.Converter.dump_file(:regions)
 
+    IO.puts("Compiling constellations...")
     constellation_files
       |> transform_data("constellationID")
       |> SDE.Converter.dump_file(:constellations)
 
+    IO.puts("Compiling systems...")
     system_files
       |> transform_data("solarSystemID")
       |> SDE.Converter.dump_file(:systems)

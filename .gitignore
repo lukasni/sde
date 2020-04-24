@@ -30,3 +30,6 @@ sde-*.tar
 
 # Ignore SDE ETF dumps
 /priv/dumps/
+
+# Ignore SDE checksum
+/priv/checksum
