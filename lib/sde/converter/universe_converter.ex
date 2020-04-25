@@ -60,7 +60,7 @@ defmodule SDE.Converter.UniverseConverter do
   defp transform_data(files, key) do
     files
     |> Enum.reduce(%{}, fn {_, data}, acc ->
-      Map.put(acc, data[key], data)
+      Map.put(acc, data[key], SDE.Converter.Recase.recase_map(data))
     end)
   end
 

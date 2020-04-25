@@ -17,6 +17,12 @@ defmodule SDE.Converter do
     YamlElixir.read_from_file!(path)
   end
 
+  def transform_data(data, %{map_key: nil}) when is_map(data) do
+    Enum.reduce(data, %{}, fn {id, map}, acc ->
+      Map.put(acc, id, SDE.Converter.Recase.recase_map(map))
+    end)
+  end
+
   def transform_data(data, %{map_key: nil}) do
     data
   end

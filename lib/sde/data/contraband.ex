@@ -5,10 +5,10 @@ defmodule SDE.Contraband do
 
   def faction(faction_id) do
     SDE.Data.get(:contraband_types)
-    |> Enum.filter(fn {_tid, %{"factions" => factions}} ->
+    |> Enum.filter(fn {_tid, %{factions: factions}} ->
       Map.has_key?(factions, faction_id)
     end)
-    |> Enum.map(fn {tid, %{"factions" => factions}} -> {tid, factions[faction_id]} end)
+    |> Enum.map(fn {tid, %{factions: factions}} -> {tid, factions[faction_id]} end)
     |> Map.new()
   end
 end
